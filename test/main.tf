@@ -18,25 +18,17 @@ locals {
   }
 }
 
-################################################################################
-# EC2 Module
-################################################################################
-
 module "ec2" {
-  source = "../../"
+  source = "../"
 
-  name = local.name
+    name = local.name
 
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "t2.micro"
-  availability_zone           = element(local.azs, 0)
-  subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
-  associate_public_ip_address = true
-
-  tags = local.tags
-
-
+    ami                         = data.aws_ami.amazon_linux.id
+    instance_type               = "t2.micro"
+    availability_zone           = element(local.azs, 0)
+   
+    
+    associate_public_ip_address = true
 }
 
 resource "aws_volume_attachment" "this" {
@@ -51,6 +43,7 @@ resource "aws_ebs_volume" "this" {
 
   tags = local.tags
 }
+
 
 ################################################################################
 # Supporting Resources
@@ -95,3 +88,4 @@ module "security_group" {
   tags = local.tags
 
 }
+
