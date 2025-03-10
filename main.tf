@@ -57,11 +57,7 @@ resource "aws_instance" "this" {
       amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
     }
   }
- lifecycle {
-    create_before_destroy = true
-    ignore_changes        = [ami]
-  }
-
+ 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
 
